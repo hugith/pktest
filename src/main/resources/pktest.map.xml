@@ -23,9 +23,6 @@
 	<db-relationship name="person" source="address" target="person">
 		<db-attribute-pair source="person_id" target="id"/>
 	</db-relationship>
-	<db-relationship name="untitledRel" source="address" target="person" toMany="true">
-		<db-attribute-pair source="id" target="current_address_id"/>
-	</db-relationship>
 	<db-relationship name="addresses" source="person" target="address" toMany="true">
 		<db-attribute-pair source="id" target="person_id"/>
 	</db-relationship>

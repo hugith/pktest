@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-map xmlns="http://cayenne.apache.org/schema/9/modelMap"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://cayenne.apache.org/schema/9/modelMap http://cayenne.apache.org/schema/9/modelMap.xsd"
+	 project-version="9">
+	<property name="defaultPackage" value="pktest.data"/>
+	<db-entity name="address">
+		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true"/>
+		<db-attribute name="name" type="VARCHAR" length="100"/>
+		<db-attribute name="person_id" type="INTEGER"/>
+	</db-entity>
+	<db-entity name="person">
+		<db-attribute name="current_address_id" type="INTEGER"/>
+		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true"/>
+		<db-attribute name="name" type="VARCHAR" length="100"/>
+	</db-entity>
+	<obj-entity name="Address" className="pktest.data.Address" dbEntityName="address">
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+	</obj-entity>
+	<obj-entity name="Person" className="pktest.data.Person" dbEntityName="person">
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+	</obj-entity>
+	<db-relationship name="person" source="address" target="person" toMany="false">
+		<db-attribute-pair source="person_id" target="id"/>
+	</db-relationship>
+	<db-relationship name="untitledRel" source="address" target="person" toMany="true">
+		<db-attribute-pair source="id" target="current_address_id"/>
+	</db-relationship>
+	<db-relationship name="addresses" source="person" target="address" toMany="true">
+		<db-attribute-pair source="id" target="person_id"/>
+	</db-relationship>
+	<db-relationship name="latest_address" source="person" target="address" toMany="false">
+		<db-attribute-pair source="current_address_id" target="id"/>
+	</db-relationship>
+	<obj-relationship name="person" source="Address" target="Person" deleteRule="Nullify" db-relationship-path="person"/>
+	<obj-relationship name="addresses" source="Person" target="Address" deleteRule="Deny" db-relationship-path="addresses"/>
+	<obj-relationship name="latestAddress" source="Person" target="Address" deleteRule="Nullify" db-relationship-path="latest_address"/>
+</data-map>

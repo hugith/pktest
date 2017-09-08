@@ -23,7 +23,6 @@
 				<version>4.1.M1-SNAPSHOT</version>
 				<configuration>
 					<destDir>${project.basedir}/src/main/java</destDir>
-					<superTemplate>${project.basedir}/src/main/resources/wosuperclass.vm</superTemplate>
 				</configuration>
 				<executions>
 					<execution>

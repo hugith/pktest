@@ -1,4 +1,7 @@
 package pktest;
+
+import java.util.UUID;
+
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.configuration.server.ServerRuntime;
 
@@ -11,17 +14,16 @@ public class Main {
 		ServerRuntime serverRuntime = ServerRuntime
 				.builder()
 				.addConfig( "cayenne-pktest.xml" )
+				.jdbcDriver( "org.h2.Driver" )
+				.url( "jdbc:h2:mem:" + UUID.randomUUID().toString() )
 				.build();
 
 		ObjectContext oc = serverRuntime.newContext();
 
-		Person person = oc.newObject( Person.class );
-		person.setName( "Hugi" );
-
-		Address address = oc.newObject( Address.class );
-		address.setName( "Hugi's Address" );
-		person.addToAddresses( address );
-		person.setLatestAddress( address );
+		Person newPerson = oc.newObject( Person.class );
+		Address newAddress = oc.newObject( Address.class );
+		newPerson.addToAddresses( newAddress );
+		newPerson.setLatestAddress( newAddress );
 
 		oc.commitChanges();
 	}
